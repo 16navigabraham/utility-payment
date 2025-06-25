@@ -3,16 +3,14 @@ import {
   coinbaseWallet,
   ledgerWallet,
   metaMaskWallet,
+  rabbyWallet,
   rainbowWallet,
   safeWallet,
   walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
-import { rainbowkitBurnerWallet } from "burner-connector";
-import * as chains from "viem/chains";
-import scaffoldConfig from "~~/scaffold.config";
+// import { rainbowkitBurnerWallet } from "burner-connector";
 
-const { onlyLocalBurnerWallet, targetNetworks } = scaffoldConfig;
-
+// List all wallets you want to support
 const wallets = [
   metaMaskWallet,
   walletConnectWallet,
@@ -20,9 +18,8 @@ const wallets = [
   coinbaseWallet,
   rainbowWallet,
   safeWallet,
-  ...(!targetNetworks.some(network => network.id !== (chains.hardhat as chains.Chain).id) || !onlyLocalBurnerWallet
-    ? [rainbowkitBurnerWallet]
-    : []),
+  rabbyWallet,
+
 ];
 
 /**
@@ -35,9 +32,8 @@ export const wagmiConnectors = connectorsForWallets(
       wallets,
     },
   ],
-
   {
-    appName: "scaffold-eth-2",
-    projectId: scaffoldConfig.walletConnectProjectId,
+    appName: "WagmiCharge",
+    projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "3a8170812b534d0ff9d794f19a901d64",
   },
 );

@@ -16,22 +16,23 @@
 @plugin "daisyui/theme" {
   name: "light";
 
-  --color-primary: #93bbfb;
-  --color-primary-content: #212638;
-  --color-secondary: #dae8ff;
-  --color-secondary-content: #212638;
-  --color-accent: #93bbfb;
-  --color-accent-content: #212638;
-  --color-neutral: #212638;
-  --color-neutral-content: #ffffff;
-  --color-base-100: #ffffff;
-  --color-base-200: #f4f8ff;
-  --color-base-300: #dae8ff;
-  --color-base-content: #212638;
-  --color-info: #93bbfb;
-  --color-success: #34eeb6;
-  --color-warning: #ffcf72;
-  --color-error: #ff8863;
+  --color-primary: #059669; /* Emerald Green */
+  --color-primary-content: #F3FDF6; /* Light background */
+  --color-secondary: #475B52; /* Secondary Text */
+  --color-secondary-content: #F3FDF6;
+  --color-accent: #059669; /* Emerald Green */
+  --color-accent-content: #F3FDF6;
+  --color-neutral: #0B1210; /* Primary Text */
+  --color-neutral-content: #E6F4EA;
+  --color-base-100: #F3FDF6; /* Background */
+  --color-base-200: #E6F4EA; /* Surface/Card */
+  --color-base-300: #CDE8DA; /* Border */
+  --color-base-content: #0B1210; /* Primary Text */
+  --color-info: #059669;
+  --color-success: #10B981;
+  --color-warning: #FFCF72;
+  --color-error: #DC2626;
+  --color-border: #CDE8DA;
 
   --radius-field: 9999rem;
   --radius-box: 1rem;
@@ -41,22 +42,23 @@
 @plugin "daisyui/theme" {
   name: "dark";
 
-  --color-primary: #212638;
-  --color-primary-content: #f9fbff;
-  --color-secondary: #323f61;
-  --color-secondary-content: #f9fbff;
-  --color-accent: #4969a6;
-  --color-accent-content: #f9fbff;
-  --color-neutral: #f9fbff;
-  --color-neutral-content: #385183;
-  --color-base-100: #385183;
-  --color-base-200: #2a3655;
-  --color-base-300: #212638;
-  --color-base-content: #f9fbff;
-  --color-info: #385183;
-  --color-success: #34eeb6;
-  --color-warning: #ffcf72;
-  --color-error: #ff8863;
+  --color-primary: #34D399; /* Mint Green */
+  --color-primary-content: #0B1210;
+  --color-secondary: #9AAEA4; /* Secondary Text */
+  --color-secondary-content: #0B1210;
+  --color-accent: #34D399; /* Mint Green */
+  --color-accent-content: #0B1210;
+  --color-neutral: #E6F4EA; /* Primary Text */
+  --color-neutral-content: #12241C;
+  --color-base-100: #0B1210; /* Background */
+  --color-base-200: #12241C; /* Surface/Card */
+  --color-base-300: #1F2E28; /* Border */
+  --color-base-content: #E6F4EA; /* Primary Text */
+  --color-info: #34D399;
+  --color-success: #10B981;
+  --color-warning: #FFCF72;
+  --color-error: #F87171;
+  --color-border: #1F2E28;
 
   --radius-field: 9999rem;
   --radius-box: 1rem;
@@ -79,7 +81,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-border, currentColor);
   }
 
   p {

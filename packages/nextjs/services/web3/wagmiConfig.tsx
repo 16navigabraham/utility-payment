@@ -1,44 +1,28 @@
 import { wagmiConnectors } from "./wagmiConnectors";
 import { Chain, createClient, fallback, http } from "viem";
-import { hardhat, mainnet } from "viem/chains";
+import { base } from "viem/chains";
 import { createConfig } from "wagmi";
-import scaffoldConfig, { DEFAULT_ALCHEMY_API_KEY, ScaffoldConfig } from "~~/scaffold.config";
-import { getAlchemyHttpUrl } from "~~/utils/scaffold-eth";
 
-const { targetNetworks } = scaffoldConfig;
+// Only support Base chain
+const targetNetworks: Chain[] = [base];
 
-// We always want to have mainnet enabled (ENS resolution, ETH price, etc). But only once.
-export const enabledChains = targetNetworks.find((network: Chain) => network.id === 1)
-  ? targetNetworks
-  : ([...targetNetworks, mainnet] as const);
+export const enabledChains: [Chain] = [base];
 
 export const wagmiConfig = createConfig({
   chains: enabledChains,
   connectors: wagmiConnectors,
   ssr: true,
   client({ chain }) {
+    // Use public RPCs or your own endpoints
     let rpcFallbacks = [http()];
 
-    const rpcOverrideUrl = (scaffoldConfig.rpcOverrides as ScaffoldConfig["rpcOverrides"])?.[chain.id];
-    if (rpcOverrideUrl) {
-      rpcFallbacks = [http(rpcOverrideUrl), http()];
-    } else {
-      const alchemyHttpUrl = getAlchemyHttpUrl(chain.id);
-      if (alchemyHttpUrl) {
-        const isUsingDefaultKey = scaffoldConfig.alchemyApiKey === DEFAULT_ALCHEMY_API_KEY;
-        // If using default Scaffold-ETH 2 API key, we prioritize the default RPC
-        rpcFallbacks = isUsingDefaultKey ? [http(), http(alchemyHttpUrl)] : [http(alchemyHttpUrl), http()];
-      }
-    }
+    // Example: Add your own custom RPC URLs here if needed
+    // if (chain.id === base.id) rpcFallbacks = [http("https://base.public-rpc.com")];
 
     return createClient({
       chain,
       transport: fallback(rpcFallbacks),
-      ...(chain.id !== (hardhat as Chain).id
-        ? {
-            pollingInterval: scaffoldConfig.pollingInterval,
-          }
-        : {}),
+      pollingInterval: 30000, // or your preferred value
     });
   },
 });

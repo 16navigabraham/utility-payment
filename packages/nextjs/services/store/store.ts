@@ -1,6 +1,4 @@
 import { create } from "zustand";
-import scaffoldConfig from "~~/scaffold.config";
-import { ChainWithAttributes, NETWORKS_EXTRA_DATA } from "~~/utils/scaffold-eth";
 
 /**
  * Zustand Store
@@ -10,6 +8,19 @@ import { ChainWithAttributes, NETWORKS_EXTRA_DATA } from "~~/utils/scaffold-eth"
  *
  * Think about it as a global useState.
  */
+
+type ChainWithAttributes = {
+  id: number;
+  name: string;
+  network: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  rpcUrls: { default: { http: string[] } };
+  blockExplorers?: { default: { name: string; url: string } };
+};
 
 type GlobalState = {
   nativeCurrency: {
@@ -32,8 +43,16 @@ export const useGlobalState = create<GlobalState>(set => ({
   setIsNativeCurrencyFetching: (newValue: boolean): void =>
     set(state => ({ nativeCurrency: { ...state.nativeCurrency, isFetching: newValue } })),
   targetNetwork: {
-    ...scaffoldConfig.targetNetworks[0],
-    ...NETWORKS_EXTRA_DATA[scaffoldConfig.targetNetworks[0].id],
+    id: 8453,
+    name: "Base",
+    network: "base",
+    nativeCurrency: {
+      name: "Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    rpcUrls: { default: { http: ["https://mainnet.base.org"] } },
+    blockExplorers: { default: { name: "Basescan", url: "https://basescan.org" } },
   },
   setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => set(() => ({ targetNetwork: newTargetNetwork })),
 }));
